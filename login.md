@@ -3,12 +3,6 @@ permalink: /login
 title: Login Page
 ---
 
-# Simple Frontend Login Page
-
-## HTML (login.html)
-
-```html
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
