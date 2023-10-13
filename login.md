@@ -44,9 +44,8 @@ body {
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 100%; /* Fill the whole width of the viewport */
-    max-width: 400px; /* Set a maximum width to prevent it from becoming too wide */
+    max-width: none; /* Remove the maximum width */
     text-align: center;
-    margin: 20px; /* Add some margin for spacing */
 }
 
 .input-group {
@@ -116,6 +115,3 @@ function loginAsStudent() {
     alert("Logged in as a student!");
 }
 </script>
-
-
-
