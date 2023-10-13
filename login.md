@@ -1,5 +1,4 @@
 ---
-layout: blogs
 permalink: /login
 title: Login Page
 ---
