@@ -1,3 +1,8 @@
+---
+permalink: /teacher
+title: Teacher Page
+---
+
 <!DOCTYPE html>
 <html lang="en">
 
