@@ -7,7 +7,7 @@ title: Student Blog
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment Selector</title>
+    <title>MortCanvas Assignment Selector</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
         body {
@@ -15,11 +15,9 @@ title: Student Blog
             padding: 20px;
             background-color: #f4f4f4;
         }
-
         label, select {
             margin-bottom: 20px;
         }
-
         select {
             padding: 10px;
             width: 100%;
@@ -27,7 +25,6 @@ title: Student Blog
             border-radius: 4px;
             font-size: 16px;
         }
-
         #assignmentDetails {
             margin-top: 20px;
             border: 1px solid #ccc;
@@ -35,7 +32,6 @@ title: Student Blog
             background-color: #fff;
             border-radius: 4px;
         }
-
         #assignmentIframe {
             width: 100%;
             height: 800px;
@@ -43,9 +39,26 @@ title: Student Blog
             border-radius: 4px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
         h1 {
             color: #333;
+        }
+        #toggleIframeBtn {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: blue;
+            margin-top: 10px;
+        }
+        #toggleArrow {
+            border: solid blue;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(-45deg);
+            transition: transform 0.3s;
+        }
+        #assignmentIframe.collapsed {
+            display: none;
         }
     </style>
 </head>
@@ -72,8 +85,14 @@ title: Student Blog
 <!-- Div to display the selected assignment details -->
 <div id="assignmentDetails"></div>
 
+<!-- Button to toggle the iframe visibility -->
+<div id="toggleIframeBtn" onclick="toggleIframe()">
+    <div id="toggleArrow"></div>
+    View Assignment Content
+</div>
+
 <!-- Iframe to display the content for the selected week -->
-<iframe id="assignmentIframe"></iframe>
+<iframe id="assignmentIframe" class="collapsed"></iframe>
 
 <script>
     // JavaScript object to store week details and iframe URLs
@@ -109,6 +128,18 @@ title: Student Blog
 
         document.getElementById('assignmentDetails').innerText = details;
         document.getElementById('assignmentIframe').src = iframeURL;
+    }
+
+    function toggleIframe() {
+        var iframe = document.getElementById('assignmentIframe');
+        var arrow = document.getElementById('toggleArrow');
+        if (iframe.classList.contains('collapsed')) {
+            iframe.classList.remove('collapsed');
+            arrow.style.transform = 'rotate(135deg)';
+        } else {
+            iframe.classList.add('collapsed');
+            arrow.style.transform = 'rotate(-45deg)';
+        }
     }
 </script>
 
