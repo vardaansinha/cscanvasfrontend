@@ -1,3 +1,9 @@
+---
+layout: blogs
+permalink: /login
+title: Login Page
+---
+
 # Simple Frontend Login Page
 
 ## HTML (login.html)
