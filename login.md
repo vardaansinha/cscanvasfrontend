@@ -29,6 +29,8 @@
 </html>
 
 
+<style>
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -99,6 +101,10 @@ button:hover {
     background-color: #ddd;
 }
 
+</style>
+
+
+<script>
 
 function loginAsTeacher() {
     const key = document.getElementById('key').value;
@@ -112,3 +118,6 @@ function loginAsTeacher() {
 function loginAsStudent() {
     alert("Logged in as a student!");
 }
+
+
+</script>
