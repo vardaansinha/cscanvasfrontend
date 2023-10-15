@@ -1,9 +1,8 @@
-# Simple Frontend Login Page
+---
+permalink: /login
+title: Login Page
+---
 
-## HTML (login.html)
-
-```html
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -28,7 +27,7 @@
 </body>
 </html>
 
-
+<style>
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -36,6 +35,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f4f4f4;
+    margin: 0;
 }
 
 .login-container {
@@ -43,7 +43,8 @@ body {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 100%; /* Fill the whole width of the viewport */
+    max-width: none; /* Remove the maximum width */
     text-align: center;
 }
 
@@ -98,8 +99,9 @@ button:hover {
     height: 1px;
     background-color: #ddd;
 }
+</style>
 
-
+<script>
 function loginAsTeacher() {
     const key = document.getElementById('key').value;
     if (key === "SPECIFIC_TEACHER_KEY") {
@@ -112,3 +114,4 @@ function loginAsTeacher() {
 function loginAsStudent() {
     alert("Logged in as a student!");
 }
+</script>

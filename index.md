@@ -1,8 +1,8 @@
 ---
 layout: default
-title: Student Blog
+title: MortCanvas
 ---
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
