@@ -83,7 +83,7 @@
 
 <body>
     <div class="login-container">
-        <h2>Welcome to Our Platform</h2>
+        <h2>Welcome to MortCanvas</h2>
         <div class="input-group">
             <label for="key">Teacher Key:</label>
             <input type="password" id="key" placeholder="Enter teacher key...">
@@ -96,7 +96,7 @@
 
         <div class="input-group">
             <label for="studentID">Student ID:</label>
-            <input type="text" id="studentID" placeholder="Enter 6 digit ID...">
+            <input type="text" id="studentID" placeholder="Enter 7 digit ID...">
         </div>
         <button onclick="loginAsStudent()">Login as Student</button>
     </div>
@@ -113,10 +113,10 @@
 
         function loginAsStudent() {
             const studentID = document.getElementById('studentID').value;
-            if (studentID.length === 6 && !isNaN(studentID)) {  // checks if input is a 6 digit number
+            if (studentID.length === 7 && !isNaN(studentID)) {  // checks if input is a 7 digit number
                 window.location.href = "https://vardaansinha.github.io/mortfinalfrontend/";
             } else {
-                alert("Invalid student ID! Please enter a 6-digit number.");
+                alert("Invalid student ID! Please enter a 7-digit number.");
             }
         }
     </script>
