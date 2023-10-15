@@ -15,11 +15,9 @@ title: Student Blog
             padding: 20px;
             background-color: #f4f4f4;
         }
-
         label, select {
             margin-bottom: 20px;
         }
-
         select {
             padding: 10px;
             width: 100%;
@@ -27,7 +25,6 @@ title: Student Blog
             border-radius: 4px;
             font-size: 16px;
         }
-
         #assignmentDetails, #metadata {
             margin-top: 20px;
             border: 1px solid #ccc;
@@ -35,24 +32,20 @@ title: Student Blog
             background-color: #fff;
             border-radius: 4px;
         }
-
         #metadata h2, #assignmentDetails h2 {
             margin-top: 0;
         }
-
         #iframeToggle {
             display: flex;
             align-items: center;
             cursor: pointer;
             margin-top: 20px;
         }
-
         #iframeArrow {
             color: blue;
             font-size: 24px;
             margin-right: 10px;
         }
-
         #assignmentIframe {
             width: 100%;
             height: 800px;
@@ -65,7 +58,7 @@ title: Student Blog
 </head>
 <body>
 
-<h1>Assignment Selector</h1>
+<h1>Welcome CS Learner!</h1>
 
 <!-- Dropdown for selecting an assignment week -->
 <label for="week">Assignment Week:</label>
