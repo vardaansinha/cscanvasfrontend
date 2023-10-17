@@ -69,27 +69,38 @@ title: Stats Page
 </div>
 
 <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Convert the Liquid student data into a format that JavaScript can read
+    const students = {{ site.data.students | jsonify }};
 
-  function showStats() {
-    const student = document.getElementById("studentList").value;
-    
-    if (student) {
-      // Generate random stats for the selected student
-      const stats = `
-        <h2>${student}'s GitHub Stats</h2>
-        <p><strong>Commits:</strong> ${getRandomStat()}</p>
-        <p><strong>Repositories Contributed To:</strong> ${getRandomStat(10)}</p> <!-- Limit to 1-10 -->
-        <p><strong>Additions:</strong> ${getRandomStat()}</p>
-        <p><strong>Deletions:</strong> ${getRandomStat()}</p>
-      `;
+    // This function is called whenever a user selects a student from the dropdown
+    function showStats(studentName) {
+      // Find the student object based on the studentName parameter
+      const student = students.find(s => s.name === studentName);
+      
+      if (student) {
+        // Create the stats display using the student data
+        const stats = `
+          <h2>${student.name}'s GitHub Stats</h2>
+          <p><strong>Commits:</strong> ${student.commits}</p>
+          <p><strong>Repositories Contributed To:</strong> ${student.repositories}</p>
+          <p><strong>Additions:</strong> ${student.additions}</p>
+          <p><strong>Deletions:</strong> ${student.deletions}</p>
+        `;
 
-      // Display the stats in the 'stats' div
-      document.getElementById("stats").innerHTML = stats;
-    } else {
-      // If no student is selected, clear the displayed stats
-      document.getElementById("stats").innerHTML = '';
+        // Display the stats in the 'stats' div
+        document.getElementById("stats").innerHTML = stats;
+      } else {
+        // If no student is selected, clear the displayed stats
+        document.getElementById("stats").innerHTML = '';
+      }
     }
-  }
+
+    // Attach the showStats function to the dropdown's onchange event
+    document.getElementById("studentList").onchange = function() {
+      showStats(this.value);
+    };
+  });
 </script>
 
 </body>
