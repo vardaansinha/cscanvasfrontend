@@ -1,13 +1,13 @@
 ---
 layout: default
-title: MortCanvas
+title: CSCanvas
 ---
 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MortCanvas Assignment Selector</title>
+    <title>CSCanvas Assignment Selector</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
         body {
