@@ -1,12 +1,10 @@
-<<<<<<< HEAD
-=======
 ---
 permalink: /teacher
 title: Teacher Page
 ---
 
 <!DOCTYPE html>
->>>>>>> b49d03b6dafea332337f1b412d83178a86767397
+
 <html lang="en">
 
 <head>
