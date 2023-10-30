@@ -1,58 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Website Title</title>
-  <style>
-    /* Style the site header */
-    .site-header {
-      background-color: #333;
-      color: #fff;
-      padding: 10px 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website Title</title>
+    <!-- Importing Google Font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
 
-    /* Style the header container */
-    #header {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+        /* Style the site header */
+        .site-header {
+            background-color: #2C3E50; /* Dark Blue */
+            color: #ECF0F1; /* Off White */
+            padding: 10px 0;
+        }
 
-    /* Style the navigation list */
-    nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex; /* Display the list items in a flex container */
-      justify-content: space-between; /* Spread list items horizontally */
-    }
+        /* Style the header container */
+        #header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    /* Style the list items and links */
-    nav li {
-      margin: 0;
-    }
+        /* Style the navigation list */
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex; /* Display the list items in a flex container */
+            justify-content: space-between; /* Spread list items horizontally */
+        }
 
-    nav a {
-      text-decoration: none;
-      color: #fff;
-      font-weight: bold;
-      font-size: 18px; /* Adjust font size as needed */
-    }
+        /* Style the list items and links */
+        nav li {
+            margin: 0 15px; /* Added margin for spacing between items */
+        }
 
-    /* Style the links on hover */
-    nav a:hover {
-      color: #00f;
-    }
-  </style>
+        nav a {
+            text-decoration: none;
+            color: #ECF0F1; /* Off White */
+            font-weight: 500; /* Medium Weight */
+            font-size: 18px; /* Adjust font size as needed */
+            transition: color 0.3s; /* Smooth transition for hover effect */
+        }
+
+        /* Style the links on hover */
+        nav a:hover {
+            color: #3498DB; /* Light Blue */
+        }
+    </style>
 </head>
+
 <body>
   <header class="site-header">
     <div id="header">
       <nav>
         <ul>
-          <li class="fork"><a href="https://vardaansinha.github.io/mortfinalfrontend/">Home</a></li>
-          <li class="title"><a href="https://vardaansinha.github.io/mortfinalfrontend/login">Login</a></li>
+          <li class="title"><a href="#">HawkHub</a></li>
+          <li class="fork"><a href="https://vardaansinha.github.io/mortfinalfrontend/login">Login</a></li>
+          <li class="fork"><a href="https://vardaansinha.github.io/mortfinalfrontend/">Student Viewer</a></li>
+          <li class="fork"><a href="#">Analytics</a></li>
+          <li class="fork"><a href="#">Teacher-Login</a></li>
+          <li class="fork"><a href="#">Leaderboards</a></li>
+          <li class="fork"><a href="#">Schedule</a></li>
         </ul>
       </nav>
     </div><!-- end header -->
