@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Signup Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,13 +15,13 @@
             margin: 0;
         }
 
-        .login-container {
+        .signup-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px; /* Adjusted this to not take up the entire viewport width */
+            max-width: 400px;
             text-align: center;
         }
 
@@ -34,7 +34,6 @@
             margin-bottom: 5px;
         }
 
-        input[type="password"],
         input[type="text"] {
             width: 100%;
             padding: 10px;
@@ -55,67 +54,49 @@
         button:hover {
             background-color: #0056b3;
         }
-
-        .divider {
-            margin: 20px 0;
-            position: relative;
-        }
-
-        .divider span {
-            background-color: #fff;
-            position: relative;
-            z-index: 1;
-            padding: 0 10px;
-        }
-
-        .divider::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background-color: #ddd;
-        }
     </style>
 </head>
 
 <body>
-    <div class="login-container">
+    <div class="signup-container">
         <h2>Welcome to MortCanvas</h2>
         <div class="input-group">
-            <label for="key">Teacher Key:</label>
-            <input type="password" id="key" placeholder="Enter teacher key...">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name...">
         </div>
-        <button onclick="loginAsTeacher()">Login as Teacher</button>
-
-        <div class="divider">
-            <span>OR</span>
-        </div>
-
         <div class="input-group">
-            <label for="studentID">Student ID:</label>
-            <input type="text" id="studentID" placeholder="Enter 7 digit ID...">
+            <label for="id">ID:</label>
+            <input type="text" id="id" placeholder="Enter your ID...">
         </div>
-        <button onclick="loginAsStudent()">Login as Student</button>
+        <button onclick="signup()">Sign Up</button>
     </div>
 
     <script>
-        function loginAsTeacher() {
-            const key = document.getElementById('key').value;
-            if (key === "MortCSA") {
-                window.location.href = "https://vardaansinha.github.io/cscanvasfrontend/teacher";
+        function signup() {
+            const name = document.getElementById('name').value;
+            const id = document.getElementById('id').value;
+
+            if (name && id) {
+                fetchSignup(id, name);
             } else {
-                alert("Invalid teacher key!");
+                alert("Please fill out all fields.");
             }
         }
 
-        function loginAsStudent() {
-            const studentID = document.getElementById('studentID').value;
-            if (studentID.length === 7 && !isNaN(studentID)) {  // checks if input is a 7 digit number
-                window.location.href = "https://vardaansinha.github.io/cscanvasfrontend/";
-            } else {
-                alert("Invalid student ID! Please enter a 7-digit number.");
+        async function fetchSignup(id, name) {
+            try {
+                const response = await fetch(`http://localhost:8085/api/signup?id=${id}&name=${name}`);
+                const data = await response.json();
+
+                if (data.isTeacher) {
+                    window.location.href = "https://vardaansinha.github.io/cscanvasfrontend/teacher";
+                } else if (data.isStudent) {
+                    window.location.href = "https://vardaansinha.github.io/cscanvasfrontend/index";
+                } else {
+                    alert("Signup unsuccessful. Invalid ID.");
+                }
+            } catch (error) {
+                alert("An error occurred while signing up.");
             }
         }
     </script>
