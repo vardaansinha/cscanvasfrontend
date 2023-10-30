@@ -104,7 +104,7 @@
         function loginAsTeacher() {
             const key = document.getElementById('key').value;
             if (key === "MortCSA") {
-                window.location.href = "https://vardaansinha.github.io/mortfinalfrontend/teacher";
+                window.location.href = "https://vardaansinha.github.io/cscanvasfrontend/teacher";
             } else {
                 alert("Invalid teacher key!");
             }
@@ -113,7 +113,7 @@
         function loginAsStudent() {
             const studentID = document.getElementById('studentID').value;
             if (studentID.length === 7 && !isNaN(studentID)) {  // checks if input is a 7 digit number
-                window.location.href = "https://vardaansinha.github.io/mortfinalfrontend/";
+                window.location.href = "https://vardaansinha.github.io/cscanvasfrontend/";
             } else {
                 alert("Invalid student ID! Please enter a 7-digit number.");
             }
