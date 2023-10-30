@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Signup Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -83,7 +83,7 @@
 
         async function fetchSignup(id, name) {
             try {
-                const response = await fetch(`https://cs-canvas.stu.nighthawkcodingsociety.com/api/login/authenticate`);
+                const response = await fetch(`https://cs-canvas.stu.nighthawkcodingsociety.com/api/user/createPerson`);
                 const data = await response.json();
 
                 if (data.isTeacher) {
