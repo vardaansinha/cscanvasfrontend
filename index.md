@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HawkHub Dashboard</title>
+    <title>Del Norte CS Hub Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -108,9 +107,9 @@
     <div class="container">
         <!-- Intro Section -->
         <div class="intro">
-            <h1>Welcome to HawkHub</h1>
+            <h1>Welcome to Del Norte CS Hub</h1>
             <p>Your one-stop platform for all educational needs. Dive into interactive lessons, connect with teachers, and track your progress with advanced analytics.</p>
-            <a href="#" class="btn">Login</a>
+            <a href="https://vardaansinha.github.io/cscanvasfrontend/login" class="btn">Login</a>
         </div>
 
         <!-- iFrame Science Section -->
@@ -131,6 +130,7 @@
         <div class="section">
             <h2>Machine Learning Predictions</h2>
             <p>With our advanced machine learning models, teachers can get insights into the potential future performance of their students. Using linear regression models, we predict the trajectory of a student's grades, allowing for timely interventions and support.</p>
+             <img src="statsdemo.png" alt="Teacher-Student Interaction Illustration">
         </div>
     </div>
 
