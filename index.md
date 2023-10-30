@@ -1,205 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSCanvas Assignment Selector</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <title>HawkHub Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* [Style remains unchanged] */
         body {
-            font-family: 'Roboto', sans-serif;
-            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
             background-color: #f4f4f4;
         }
-        label, select {
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .intro {
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .intro h1 {
+            font-size: 40px;
             margin-bottom: 20px;
         }
-        select {
-            padding: 10px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
+
+        .intro p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 20px auto;
         }
-        #assignmentDetails, #metadata {
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            padding: 10px;
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498DB;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .section {
+            padding: 50px 0;
             background-color: #fff;
-            border-radius: 4px;
+            margin-bottom: 20px;
+            border-radius: 5px;
         }
-        #metadata h2, #assignmentDetails h2 {
-            margin-top: 0;
+
+        .section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
         }
-        #iframeToggle {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            margin-top: 20px;
+
+        .section p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
         }
-        #iframeArrow {
-            color: blue;
-            font-size: 24px;
-            margin-right: 10px;
+
+        .section img {
+            max-width: 100%;
+            display: block;
+            margin: 20px auto;
         }
-        #assignmentIframe {
+
+        /* Footer Styles */
+        .footer {
+            background-color: #2C3E50;
+            color: #ecf0f1;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
             width: 100%;
-            height: 800px;
-            border: none;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: none; /* Initially hidden */
+        }
+
+        .footer a {
+            color: #3498DB;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer p {
+            text-align: center;
+            margin: 0;
+        }
+
+        .footer .github-logo {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
         }
     </style>
 </head>
+
 <body>
+    <div class="container">
+        <!-- Intro Section -->
+        <div class="intro">
+            <h1>Welcome to HawkHub</h1>
+            <p>Your one-stop platform for all educational needs. Dive into interactive lessons, connect with teachers, and track your progress with advanced analytics.</p>
+            <a href="#" class="btn">Login</a>
+        </div>
 
-<h1>Welcome CS Learner!</h1>
+        <!-- iFrame Science Section -->
+        <div class="section">
+            <h2>iFrame Science</h2>
+            <p>At HawkHub, we utilize the power of iFrames to deliver seamless and interactive content directly to your browser. This allows for a dynamic learning experience, where content can be tailored and adjusted in real-time based on user interactions.</p>
+            <img src="path_to_your_image1.jpg" alt="iFrame Science Illustration">
+        </div>
 
-<label for="week">Assignment Week:</label>
-<select id="week" name="week"></select>
+        <!-- Teacher-Student Interaction Section -->
+        <div class="section">
+            <h2>Interact with Teacher's Assignments</h2>
+            <p>Students can directly interact with assignments provided by their teachers. This two-way interaction ensures that students get immediate feedback on their work, and teachers can gauge the understanding and performance of their students in real-time.</p>
+            <img src="path_to_your_image2.jpg" alt="Teacher-Student Interaction Illustration">
+        </div>
 
-<label for="category">Assignment Category:</label>
-<select id="category" name="category">
-    <option value="homework">Homework</option>
-    <option value="project">Project</option>
-    <option value="exam">Exam</option>
-</select>
+        <!-- Machine Learning Prediction Section -->
+        <div class="section">
+            <h2>Machine Learning Predictions</h2>
+            <p>With our advanced machine learning models, teachers can get insights into the potential future performance of their students. Using linear regression models, we predict the trajectory of a student's grades, allowing for timely interventions and support.</p>
+        </div>
+    </div>
 
-<div id="assignmentDetails"></div>
-<div id="metadata">
-    <h2>MortIt (QuickInfo):</h2>
-</div>
-<div id="iframeToggle" onclick="assignmentManager.toggleIframe()">
-    <span id="iframeArrow">➤</span>
-    <span>View Assignment</span>
-</div>
-<iframe id="assignmentIframe"></iframe>
-
-<script>
-class Assignment {
-    constructor(details, iframeURL, metadata) {
-        this.details = details;
-        this.iframeURL = iframeURL;
-        this.metadata = metadata;
-    }
-}
-
-class AssignmentManager {
-    constructor() {
-        this.weekDetails = {
-            "week1": new Assignment(
-                "Week 1: Java Hello, Java Console Games, Linux Shell and Bash",
-                "https://nighthawkcoders.github.io/teacher//c4.0/2023/08/15/java-hello_IPYNB_2_.html",
-                {
-                    "Hacks": "Build your own Jupyter Notebook meeting specific competencies.",
-                    "Due Date": "August 22, 2023",
-                    "Overall Assignment Objective": "Introduction to Java basics and Linux Shell."
-                }
-            ),
-            "week2": new Assignment(
-                "Week 2: JS Calculator, JS Itunes API, JS Input, JS Output w/ jquery, JS Output w/ Objects",
-                "https://nighthawkcoders.github.io/teacher//c3.0/c3.1/c4.1/2023/09/06/javascript-output-jquery_IPYNB_2_.html",
-                {
-                    "Hacks": "Experiment with different JS libraries for enhanced functionality.",
-                    "Due Date": "September 13, 2023",
-                    "Overall Assignment Objective": "Introduction to JavaScript and jQuery."
-                }
-            ),
-            "week3": new Assignment(
-                "Week 3: JavaScript Motion Dog",
-                "https://nighthawkcoders.github.io/teacher//2023/09/21/javascript_motion_dog_IPYNB_2_.html",
-                {
-                    "Hacks": "Animate the dog using CSS transitions.",
-                    "Due Date": "September 28, 2023",
-                    "Overall Assignment Objective": "Advanced JavaScript animations."
-                }
-            ),
-            "week4": new Assignment(
-                "Week 4: Student Teaching Tri 1",
-                "https://nighthawkcoders.github.io/teacher//2023/09/28/java-student-teach-tri1.html",
-                {
-                    "Hacks": "Engage in peer teaching and learn from fellow students.",
-                    "Due Date": "October 5, 2023",
-                    "Overall Assignment Objective": "Peer teaching and collaborative learning."
-                }
-            ),
-            "week5": new Assignment(
-                "Week 5: ChatGPT in Java",
-                "https://nighthawkcoders.github.io/teacher//2023/10/09/java-chatgpt_IPYNB_2_.html",
-                {
-                    "Hacks": "Integrate ChatGPT with Java applications.",
-                    "Due Date": "October 16, 2023",
-                    "Overall Assignment Objective": "Introduction to ChatGPT in Java."
-                }
-            ),
-            "week6": new Assignment(
-                "Week 6: Passion Project Tri 1",
-                "https://nighthawkcoders.github.io/teacher//2023/09/28/java-spring_passion.html",
-                {
-                    "Hacks": "Work on a project of your choice and showcase your skills.",
-                    "Due Date": "October 23, 2023",
-                    "Overall Assignment Objective": "Self-directed project work."
-                }
-            ),
-            "week7": new Assignment(
-                "Week 7: PP Ideation Checkpoint",
-                "https://nighthawkcoders.github.io/teacher//2023/09/28/java-spring-passion-idea.html",
-                {
-                    "Hacks": "Brainstorm and finalize your project idea.",
-                    "Due Date": "October 30, 2023",
-                    "Overall Assignment Objective": "Project ideation and planning."
-                }
-            )
-        };
-        this.populateWeekDropdown();
-        document.getElementById('week').addEventListener('change', () => this.displayAssignment());
-    }
-
-    populateWeekDropdown() {
-        const weekSelector = document.getElementById('week');
-        for (const week in this.weekDetails) {
-            const option = document.createElement('option');
-            option.value = week;
-            option.text = week.charAt(0).toUpperCase() + week.slice(1);
-            weekSelector.appendChild(option);
-        }
-    }
-
-    displayAssignment() {
-        const selectedWeek = document.getElementById('week').value;
-        const assignment = this.weekDetails[selectedWeek];
-        document.getElementById('assignmentDetails').innerText = assignment ? assignment.details : "Please select a valid week.";
-        document.getElementById('assignmentIframe').src = assignment ? assignment.iframeURL : "";
-
-        const metadataDiv = document.getElementById('metadata');
-        if (assignment && assignment.metadata) {
-            metadataDiv.style.display = "block";
-            metadataDiv.innerHTML = "<h2>Week Metadata:</h2>";
-            for (const key in assignment.metadata) {
-                metadataDiv.innerHTML += `<strong>${key}:</strong> ${assignment.metadata[key]}<br>`;
-            }
-        } else {
-            metadataDiv.style.display = "none";
-        }
-    }
-
-    toggleIframe() {
-        const iframe = document.getElementById('assignmentIframe');
-        const arrow = document.getElementById('iframeArrow');
-        if (iframe.style.display === "none") {
-            iframe.style.display = "block";
-            arrow.innerHTML = "➘";
-        } else {
-            iframe.style.display = "none";
-            arrow.innerHTML = "➤";
-        }
-    }
-}
-
-const assignmentManager = new AssignmentManager();
-</script>
-
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <p>
+                <span class="github-logo">🔗</span>
+                Check out our project on <a href="https://github.com/vardaansinha/cscanvasfrontend" target="_blank">GitHub</a>
+            </p>
+        </div>
+    </footer>
 </body>
+
 </html>
