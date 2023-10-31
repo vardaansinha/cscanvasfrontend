@@ -74,49 +74,69 @@ button:hover {
             </div>
             <button type="submit">Submit</button>
         </form>
+        <div id="computation"></div>
+        <div id="imageContainer"></div>
     </div>
    <script>
     // Define the API endpoint URL
-const apiUrl = 'http://localhost:8085/api/grade'; // Adjust the URL as needed
-// Create an object to store your request data
-const requestData = {
-    numStudents: 10 // Replace with your desired value
-};
-// Define the fetch options, including the HTTP method and headers
-const fetchOptions = {
-    method: 'POST', // Use POST since you are sending data in the request body
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(requestData) // Convert request data to JSON
-};
-// Make the API request using the fetch function
-fetch(apiUrl, fetchOptions)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json(); // Parse the response as JSON
-    })
-    .then(data => {
-        // Handle the response data here
-        console.log('API Response:', data);
-        // You can access the computation and imageUrls in the 'data' object
-        // For example, you can display the computation string and image URLs in your HTML.
-        document.getElementById('computation').textContent = data.computation;
-        const imageUrls = data.imageUrls;
-        imageUrls.forEach(url => {
-            const img = document.createElement('img');
-            img.src = url;
-            document.getElementById('imageContainer').appendChild(img);
-        });
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        // Handle errors here
+    const apiUrl = 'http://localhost:8085/api/grade/predict';
+
+    document.getElementById('githubStatsForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get values from the form
+        const commits = document.getElementById('commits').value;
+        const pulls = document.getElementById('pulls').value;
+        const issues = document.getElementById('issues').value;
+        const repos = document.getElementById('repos').value;
+
+        // Create an object to store your request data
+        const requestData = {
+            commits: commits,
+            pulls: pulls,
+            issues: issues,
+            repos: repos
+        };
+
+        // Define the fetch options, including the HTTP method and headers
+        const fetchOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        };
+
+        // Make the API request using the fetch function
+        fetch(apiUrl, fetchOptions)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Compute the prediction using the returned coefficients
+                const prediction = (data.commitCoefficient * commits) + 
+                                   (data.pullCoefficient * pulls) + 
+                                   (data.issueCoefficient * issues) + 
+                                   (data.reposContributedToCoefficient * repos);
+                
+                // Display the computed prediction
+                document.getElementById('computation').textContent = `Predicted Score: ${prediction.toFixed(2)}`;
+
+                // Display the chart images
+                const imageUrls = data.imageUrls;
+                imageUrls.forEach(url => {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    document.getElementById('imageContainer').appendChild(img);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     });
     </script>
 </body>
 </html>
-
-
