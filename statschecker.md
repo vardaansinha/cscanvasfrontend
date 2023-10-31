@@ -91,12 +91,10 @@ button:hover {
         const repos = document.getElementById('repos').value;
 
         // Create an object to store your request data
-        const requestData = {
-            commits: commits,
-            pulls: pulls,
-            issues: issues,
-            repos: repos
-        };
+        const requestData =
+            {
+                "numStudents": 100
+            }
 
         // Define the fetch options, including the HTTP method and headers
         const fetchOptions = {
