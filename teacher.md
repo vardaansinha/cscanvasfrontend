@@ -95,6 +95,7 @@ title: Teacher Page
 </head>
 
 <body>
+<<<<<<< HEAD
 
 <button class="button button-blue" onclick="showForm()">+ New Assignment</button>
 
@@ -159,12 +160,121 @@ title: Teacher Page
             <option value="Week 36">Week 36</option>
         </select>
     </div>
+=======
+    <!-- Middleware to check JWT and user role -->
+    <script>
+        function checkJWTAndRole(route) {
+            const token = localStorage.getItem('jwt'); // Retrieve JWT from local storage
+            if (token) {
+                // Verify and decode the JWT token
+                const decodedToken = jwt_decode(token);
+    
+                // Check if the user is an admin (role === 1)
+                if (decodedToken.role === 1) {
+                    // Admin user is authorized for the teacher page
+                    if (route === '/teacher') {
+                        window.location.href = route; // Redirect to the teacher page
+                    } else {
+                        // Admin user is not authorized for non-teacher routes
+                        window.location.href = '/access-denied'; // Redirect to access denied page
+                    }
+                } else {
+                    // Non-admin user is authorized for the student page
+                    if (route === '/index') {
+                        window.location.href = route; // Redirect to the student page
+                    } else {
+                        // Non-admin user is not authorized for non-student routes
+                        window.location.href = '/access-denied'; // Redirect to access denied page
+                    }
+                }
+            } else {
+                // No JWT token, user is not authenticated, redirect to login page
+                window.location.href = '/login'; // Redirect to login page
+            }
+        }
+    
+        // Call the middleware with the current route
+        checkJWTAndRole(window.location.pathname);
+    </script>
+    <!-- End of Middleware -->
 
-    <div class="input-field">
-        <label for="points">Points:</label>
-        <input type="number" id="points" name="points">
+    <button class="button button-blue" onclick="uiManager.showForm()">+ New Assignment</button>
+    <div id="assignmentForm" style="display: none;">
+        <div class="input-field">
+            <label for="title">Title of Assignment:</label>
+            <input type="text" id="title" name="title">
+        </div>
+
+        <div class "input-field">
+            <label for="description">Description of Assignment:</label>
+            <input type="text" id="description" name="description">
+        </div>
+
+        <div class="input-field">
+            <label for="category">Assignment Category:</label>
+            <select id="category" name="category">
+                <option value="homework">Homework</option>
+                <option value="project">Project</option>
+                <option value="exam">Exam</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <label for="week">Assignment Week:</label>
+            <select id="week" name="week">
+                <!-- ... (same as before) -->
+            </select>
+        </div>
+
+        <div class="input-field">
+            <label for="points">Points:</label>
+            <input type="number" id="points" name="points">
+        </div>
+
+        <button class="button button-green" onclick="uiManager.saveAssignment()">Save</button>
     </div>
 
+    <h2>Your Published Assignments</h2>
+    <div id="savedAssignments"></div>
+
+    <script>
+        class Assignment {
+            constructor(title, description, category, week, points) {
+                this.title = title;
+                this.description = description;
+                this.category = category;
+                this.week = week;
+                this.points = points;
+            }
+        }
+>>>>>>> 2a8eb2432b4e8f813001138e8a67781dcd940c0d
+
+        class AssignmentManager {
+            constructor() {
+                this.assignments = this.getAssignmentsFromStorage();
+            }
+
+            getAssignmentsFromStorage() {
+                let assignments = localStorage.getItem('assignments');
+                return assignments ? JSON.parse(assignments) : [];
+            }
+
+            saveAssignmentToStorage() {
+                localStorage.setItem('assignments', JSON.stringify(this.assignments));
+            }
+
+            addAssignment(assignment) {
+                this.assignments.push(assignment);
+                this.saveAssignmentToStorage();
+            }
+
+            updateAssignment(index, updatedAssignment) {
+                this.assignments[index] = updatedAssignment;
+                this.saveAssignmentToStorage();
+            }
+        }
+
+<<<<<<< HEAD
     <button class="button button-green" onclick="saveAssignment()">Save</button>
 </div>
 
@@ -455,7 +565,96 @@ title: Teacher Page
 </html>
 
 </script>
+=======
+        class UIManager {
+            constructor(assignmentManager) {
+                this.assignmentManager = assignmentManager;
+                this.currentEditIndex = null;
+            }
 
+            showForm() {
+                document.getElementById('assignmentForm').style.display = 'block';
+            }
+
+            hideForm() {
+                document.getElementById('assignmentForm').style.display = 'none';
+            }
+
+            getFormData() {
+                return new Assignment(
+                    document.getElementById('title').value,
+                    document.getElementById('description').value,
+                    document.getElementById('category').value,
+                    document.getElementById('week').value,
+                    document.getElementById('points').value
+                );
+            }
+
+            saveAssignment() {
+                const assignment = this.getFormData();
+                if (this.currentEditIndex !== null) {
+                    this.assignmentManager.updateAssignment(this.currentEditIndex, assignment);
+                    this.currentEditIndex = null;
+                } else {
+                    this.assignmentManager.addAssignment(assignment);
+                }
+                this.displayAssignments();
+                this.hideForm();
+                alert('Assignment saved!');
+            }
+
+            editAssignment(index) {
+                const assignment = this.assignmentManager.assignments[index];
+                document.getElementById('title').value = assignment.title;
+                document.getElementById('description').value = assignment.description;
+                document.getElementById('category').value = assignment.category;
+                document.getElementById('week').value = assignment.week;
+                document.getElementById('points').value = assignment.points;
+                this.currentEditIndex = index;
+                this.showForm();
+            }
+
+            displayAssignments() {
+                let tableHtml = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th Description</th>
+                            <th>Category</th>
+                            <th>Week</th>
+                            <th>Points</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+
+                this.assignmentManager.assignments.forEach((assignment, index) => {
+                    tableHtml += `
+                        <tr>
+                            <td>${assignment.title}</td>
+                            <td>${assignment.description}</td>
+                            <td>${assignment.category}</td>
+                            <td>${assignment.week}</td>
+                            <td>${assignment.points}</td>
+                            <td><button class="edit-btn" onclick="uiManager.editAssignment(${index})">✏️</button></td>
+                        </tr>
+                    `;
+                });
+
+                tableHtml += '</tbody></table>';
+                document.getElementById('savedAssignments').innerHTML = tableHtml;
+            }
+        }
+>>>>>>> 2a8eb2432b4e8f813001138e8a67781dcd940c0d
+
+        const assignmentManager = new AssignmentManager();
+        const uiManager = new UIManager(assignmentManager);
+
+        window.onload = function() {
+            uiManager.displayAssignments();
+        };
+    </script>
 </body>
-
 </html>
