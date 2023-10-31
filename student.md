@@ -1,48 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSCanvas Assignment Selector</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* [Style remains unchanged] */
         body {
             font-family: 'Roboto', sans-serif;
             padding: 20px;
             background-color: #f4f4f4;
+            color: #001F3F; /* Navy */
         }
+
+        h1, h2 {
+            color: #001F3F; /* Navy */
+        }
+
         label, select {
             margin-bottom: 20px;
         }
+
         select {
             padding: 10px;
             width: 100%;
-            border: 1px solid #ccc;
+            border: 1px solid #001F3F; /* Navy */
             border-radius: 4px;
             font-size: 16px;
+            color: #001F3F; /* Navy */
+            background-color: white;
         }
+
         #assignmentDetails, #metadata {
             margin-top: 20px;
-            border: 1px solid #ccc;
+            border: 1px solid #001F3F; /* Navy */
             padding: 10px;
             background-color: #fff;
             border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        #metadata h2, #assignmentDetails h2 {
-            margin-top: 0;
-        }
+
         #iframeToggle {
             display: flex;
             align-items: center;
             cursor: pointer;
             margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #001F3F; /* Navy */
+            color: white;
+            transition: background-color 0.3s;
         }
+
+        #iframeToggle:hover {
+            background-color: #003366; /* Darker Navy */
+        }
+
         #iframeArrow {
-            color: blue;
             font-size: 24px;
             margin-right: 10px;
+            transition: transform 0.3s;
         }
+
         #assignmentIframe {
             width: 100%;
             height: 800px;
@@ -51,11 +71,49 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: none; /* Initially hidden */
         }
+
+        /* Calendar Styles */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .calendar button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #001F3F; /* Navy */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .calendar button:hover {
+            background-color: #003366; /* Darker Navy */
+        }
+
+        .calendar button.active {
+            background-color: #0074D9; /* Blue */
+        }
     </style>
 </head>
+
 <body>
 
 <h1>Welcome CS Learner!</h1>
+
+<!-- Calendar -->
+<div class="calendar">
+    <button onclick="selectWeek('week1')">Week 1</button>
+    <button onclick="selectWeek('week2')">Week 2</button>
+    <button onclick="selectWeek('week3')">Week 3</button>
+    <button onclick="selectWeek('week4')">Week 4</button>
+    <button onclick="selectWeek('week5')">Week 5</button>
+    <button onclick="selectWeek('week6')">Week 6</button>
+    <button onclick="selectWeek('week7')">Week 7</button>
+</div>
 
 <label for="week">Assignment Week:</label>
 <select id="week" name="week"></select>
@@ -199,7 +257,13 @@ class AssignmentManager {
 }
 
 const assignmentManager = new AssignmentManager();
+
+function selectWeek(week) {
+    document.getElementById('week').value = week;
+    assignmentManager.displayAssignment();
+}
 </script>
 
 </body>
+
 </html>
