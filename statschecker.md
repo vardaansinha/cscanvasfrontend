@@ -1,113 +1,122 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student GitHub Stats</title>
-  <style>
-    /* Base styling */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    /* Header styling */
-    h2 {
-      color: #333;
-    }
-    /* Dropdown styling */
-    select {
-      padding: 10px;
-      margin-top: 20px;
-      font-size: 16px;
-    }
-    /* Container for stats */
-    #stats {
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-      margin: 20px auto;
-      padding: 20px;
-      width: 90%;
-      max-width: 400px;
-    }
-    /* Stat list styling */
-    p {
-      font-size: 18px;
-      line-height: 2;
-      text-align: left;
-      padding-left: 20px;
-      border-left: 3px solid #4CAF50; /* a nice green */
-    }
-    /* Strong tag styling */
-    strong {
-      color: #333;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Stats Input</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<html>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.input-group {
+    margin-bottom: 20px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+</style>
 <body>
-  <h1>CSA Student Stats Checker - MortCanvas.org</h1>
-
-  <!-- Dropdown selection for the student list -->
-  <select id="studentList">
-    <option value="">--Select a Student--</option>
-    {% for student in site.data.students %}
-      <option value="{{ student.name }}">{{ student.name }}</option>
-    {% endfor %}
-  </select>
-
-  <div id="stats">
-    <!-- GitHub stats will be displayed here -->
-  </div>
-
-  <script>
-    // Define an object to encapsulate the functionality
-    const StudentStatsApp = {
-      students: [],
-
-      // Initialize the application
-      init: function () {
-        // Convert the Liquid student data into a format that JavaScript can read
-        this.students = {{ site.data.students | jsonify }};
-
-        // Attach the showStats function to the dropdown's onchange event
-        const studentList = document.getElementById("studentList");
-        studentList.onchange = this.showStats.bind(this, studentList);
-
-        // Initialize with the default option selected
-        this.showStats(studentList);
-      },
-
-      // This function is called whenever a user selects a student from the dropdown
-      showStats: function (selectElement) {
-        const studentName = selectElement.value;
-        const student = this.students.find(s => s.name === studentName);
-
-        // Create the stats display using the student data
-        let stats = "<h2>GitHub Stats</h2>";
-
-        if (student) {
-          stats += `
-            <h2>${student.name}'s GitHub Stats</h2>
-            <p><strong>Commits:</strong> ${student.commits}</p>
-            <p><strong>Repositories Contributed To:</strong> ${student.repositories}</p>
-            <p><strong>Additions:</strong> ${student.additions}</p>
-            <p><strong>Deletions:</strong> ${student.deletions}</p>
-          `;
+    <div class="container">
+        <h1>Enter Your GitHub Stats</h1>
+        <form id="githubStatsForm">
+            <div class="input-group">
+                <label for="commits">Commits:</label>
+                <input type="number" id="commits" required>
+            </div>
+            <div class="input-group">
+                <label for="pulls">Pull Requests:</label>
+                <input type="number" id="pulls" required>
+            </div>
+            <div class="input-group">
+                <label for="issues">Issues:</label>
+                <input type="number" id="issues" required>
+            </div>
+            <div class="input-group">
+                <label for="repos">Repositories Contributed To:</label>
+                <input type="number" id="repos" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script src="script.js">
+    // Define the API endpoint URL
+const apiUrl = '/api/grade/predict'; // Adjust the URL as needed
+// Create an object to store your request data
+const requestData = {
+    numStudents: 10 // Replace with your desired value
+};
+// Define the fetch options, including the HTTP method and headers
+const fetchOptions = {
+    method: 'POST', // Use POST since you are sending data in the request body
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestData) // Convert request data to JSON
+};
+// Make the API request using the fetch function
+fetch(apiUrl, fetchOptions)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
-
-        // Display the stats in the 'stats' div
-        const statsElement = document.getElementById("stats");
-        statsElement.innerHTML = stats;
-      },
-    };
-
-    // Initialize the application when the DOM is ready
-    document.addEventListener("DOMContentLoaded", function () {
-      StudentStatsApp.init();
+        return response.json(); // Parse the response as JSON
+    })
+    .then(data => {
+        // Handle the response data here
+        console.log('API Response:', data);
+        // You can access the computation and imageUrls in the 'data' object
+        // For example, you can display the computation string and image URLs in your HTML.
+        document.getElementById('computation').textContent = data.computation;
+        const imageUrls = data.imageUrls;
+        imageUrls.forEach(url => {
+            const img = document.createElement('img');
+            img.src = url;
+            document.getElementById('imageContainer').appendChild(img);
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle errors here
     });
-  </script>
+11:20
+chang
+    </script>
 </body>
 </html>
