@@ -109,7 +109,7 @@
         <div class="intro">
             <h1>Welcome to Del Norte CS Hub</h1>
             <p>Your one-stop platform for all educational needs. Dive into interactive lessons, connect with teachers, and track your progress with advanced analytics.</p>
-            <a href="https://vardaansinha.github.io/cscanvasfrontend/login" class="btn">Login</a>
+            <a href="{{ site.baseurl }}/login" class="btn">Login</a>
         </div>
 
         <!-- iFrame Science Section -->
