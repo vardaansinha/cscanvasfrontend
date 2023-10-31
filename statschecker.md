@@ -75,9 +75,9 @@ button:hover {
             <button type="submit">Submit</button>
         </form>
     </div>
-    <script src="script.js">
+   <script>
     // Define the API endpoint URL
-const apiUrl = '/api/grade/predict'; // Adjust the URL as needed
+const apiUrl = 'http://localhost:8085/api/grade'; // Adjust the URL as needed
 // Create an object to store your request data
 const requestData = {
     numStudents: 10 // Replace with your desired value
@@ -115,8 +115,6 @@ fetch(apiUrl, fetchOptions)
         console.error('Error:', error);
         // Handle errors here
     });
-11:20
-chang
     </script>
 </body>
 </html>
