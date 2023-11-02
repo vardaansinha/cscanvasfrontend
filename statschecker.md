@@ -79,7 +79,7 @@ button:hover {
     </div>
    <script>
     // Define the API endpoint URL
-    const apiUrl = 'http://cscanvas.stu.nighthawkcodingsociety.com/api/grade/predict';
+    const apiUrl = 'http://localhost:8085/api/grade/predict';
 
     document.getElementById('githubStatsForm').addEventListener('submit', function(event) {
         event.preventDefault();
