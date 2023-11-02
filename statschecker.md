@@ -79,7 +79,7 @@ button:hover {
     </div>
    <script>
     // Define the API endpoint URL
-    const apiUrl = 'http://localhost:8085/api/grade/predict';
+    const apiUrl = 'http://cscanvas.stu.nighthawkcodingsociety.com/api/grade/predict';
 
     document.getElementById('githubStatsForm').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -93,7 +93,7 @@ button:hover {
         // Create an object to store your request data
         const requestData =
             {
-                "numStudents": 100
+                "numStudents": 1000
             }
 
         // Define the fetch options, including the HTTP method and headers
@@ -115,7 +115,8 @@ button:hover {
             })
             .then(data => {
                 // Compute the prediction using the returned coefficients
-                const prediction = (data.commitCoefficient * commits) + 
+                const prediction = data.bias
+                                   (data.commitCoefficient * commits) + 
                                    (data.pullCoefficient * pulls) + 
                                    (data.issueCoefficient * issues) + 
                                    (data.reposContributedToCoefficient * repos);
@@ -127,7 +128,7 @@ button:hover {
                 const imageUrls = data.imageUrls;
                 imageUrls.forEach(url => {
                     const img = document.createElement('img');
-                    img.src = url;
+                    img.src = "http://localhost:8085" + url;
                     document.getElementById('imageContainer').appendChild(img);
                 });
             })
