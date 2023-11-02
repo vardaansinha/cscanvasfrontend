@@ -57,82 +57,97 @@
 </head>
 <body>
     <div class="signup-container">
-        <h2>Welcome to MortCanvas</h2>
+        <h2>Welcome to CsCanvas</h2>
+        <h2>Log in to an account below</h2>
         <div class="input-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" placeholder="Enter your name...">
+            <label for="name">Email:</label>
+            <input type="text" id="name" placeholder="Enter your email...">
         </div>
         <div class="input-group">
-            <label for="id">ID:</label>
-            <input type="text" id="id" placeholder="Enter your ID...">
+            <label for="password">password:</label>
+            <input type="text" id="password" placeholder="Enter your secure password...">
         </div>
-        <button onclick="signup()">Sign Up</button>
+        <button onclick="logIn()">Log In</button>
+        <button onclick="logOut()">Log out</button>
+        <h2>Don't have an account? </h2> <a href="/cscanvasfrontend/signup">Sign up here</a>
     </div>
 
     <script>
-        function signup() {
-            const name = document.getElementById('name').value;
-            const id = document.getElementById('id').value;
+        const email = document.getElementById('name');
+        const password = document.getElementById('password');
+        function logIn() {
 
-            if (name && id) {
-                fetchSignup(id, name);
+            if (email.value && password.value) {
+                fetchLogin(email.value, password.value);
             } else {
                 alert("Please fill out all fields.");
             }
         }
 
-        async function fetchSignup(id, name) {
-            try {
-                const response = await fetch(`https://cs-canvas.stu.nighthawkcodingsociety.com/api/login/authenticate`);
-                const data = await response.json();
-
-                if (data.isTeacher) {
-                    window.location.href = "https://vardaansinha.github.io/cscanvasfrontend/teacher";
-                } else if (data.isStudent) {
-                    window.location.href = "https://vardaansinha.github.io/cscanvasfrontend/index";
-                } else {
-                    alert("Signup unsuccessful. Invalid ID.");
-                }
-            } catch (error) {
-                alert("An error occurred while signing up.");
-            }
-        }
-    </script>
-
-    <script>
-        // Middleware to check JWT and user role
-        function checkJWTAndRole(route) {
-            const token = localStorage.getItem('jwt'); // Retrieve JWT from local storage
-            if (token) {
-                // Verify and decode the JWT token
-                const decodedToken = jwt_decode(token);
-
-                // Check if the user is an admin (role === 1)
-                if (decodedToken.role === 1) {
-                    // Admin user is authorized for the teacher page
-                    if (route === '/cscanvasfrontend/teacher') {
-                        window.location.href = route; // Redirect to the teacher page
-                    } else {
-                        // Admin user is not authorized for non-teacher routes
-                        window.location.href = '/cscanvasfrontend/access-denied'; // Redirect to access denied page
-                    }
-                } else {
-                    // Non-admin user is authorized for the student page
-                    if (route === '/cscanvasfrontend/index') {
-                        window.location.href = route; // Redirect to the student page
-                    } else {
-                        // Non-admin user is not authorized for non-student routes
-                        window.location.href = '/cscanvasfrontend/access-denied'; // Redirect to access denied page
-                    }
-                }
-            } else {
-                // No JWT token, user is not authenticated, redirect to login page
-                window.location.href = '/cscanvasfrontend/login'; // Redirect to login page
-            }
+        function logOut() {
+            fetchLogout()
         }
 
-        // Call the middleware with the current route
-        // checkJWTAndRole(window.location.pathname);
+        async function fetchLogin(email, password) {
+            const apiUrl = "https://cs-canvas.stu.nighthawkcodingsociety.com/api/login/authenticate";
+            
+            const personData = {
+                email: email,
+                password: password,
+              };
+
+            fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json", // Specify the content type
+                    },
+                    body: JSON.stringify(personData), // Convert data to JSON format
+                  })
+                    .then((response) => {
+                      if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                      }
+                    })
+                    .then((data) => {
+                      alert("Logged in!");
+                      // window.location.href = "/cscanvasfrontend/student";
+                    })
+                    .catch((error) => {
+                      // Handle errors here
+                      console.error("Error logging in:", error);
+                    });
+        }
+
+
+        async function fetchLogin(email, password) {
+            const apiUrl = "https://cs-canvas.stu.nighthawkcodingsociety.com/api/login/logout";
+            
+            const personData = {
+              };
+
+            fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json", // Specify the content type
+                    },
+                    body: JSON.stringify(personData), // Convert data to JSON format
+                  })
+                    .then((response) => {
+                      if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                      }
+                    })
+                    .then((data) => {
+                      alert("Logged out!");
+                      // window.location.href = "/cscanvasfrontend/student";
+                    })
+                    .catch((error) => {
+                      // Handle errors here
+                      console.error("Error logging in:", error);
+                    });
+        }
+
     </script>
+
 </body>
 </html>
