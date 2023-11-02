@@ -99,14 +99,18 @@
             fetch(apiUrl, {
                     method: "POST",
                     headers: {
-                      "Content-Type": "application/json", // Specify the content type
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
                     },
                     body: JSON.stringify(personData), // Convert data to JSON format
                   })
                     .then((response) => {
                       if (!response.ok) {
+                        console.error("Response Status:", response.status);
                         throw new Error("Network response was not ok");
                       }
+
+                      return response.json()
                     })
                     .then((data) => {
                       alert("Logged in!");
@@ -120,7 +124,7 @@
 
 
         async function fetchLogout(email, password) {
-            const apiUrl = "https://cs-canvas.stu.nighthawkcodingsociety.com/api/login/logout";
+            const apiUrl = "localhost:8085/api/login/logout";
             
             const personData = {
               };
