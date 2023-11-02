@@ -1,6 +1,6 @@
-
 <html lang="en">
-    <head>
+
+<head>
     <meta name="cors" content="true">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,27 +57,29 @@
         }
     </style>
 </head>
+
 <body>
     <div class="signup-container">
-        <h2>Welcome to MortCanvas</h2>
+        <h2>Welcome to CS Canvas</h2>
+        <h2>Create an account below</h2>
         <div class="input-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" placeholder="Enter your name...">
+            <label for="name">Email:</label>
+            <input type="text" id="name" placeholder="Enter your email...">
         </div>
         <div class="input-group">
-            <label for="id">ID:</label>
-            <input type="text" id="id" placeholder="Enter your ID...">
+            <label for="password">password:</label>
+            <input type="text" id="password" placeholder="Enter your secure password...">
         </div>
         <button onclick="signup()">Sign Up</button>
+        <h2>Already have an account? </h2> <a href="/cscanvasfrontend/login">Login here</a>
     </div>
 
     <script>
         const email = document.getElementById('name');
-        const password = document.getElementById('id');
+        const password = document.getElementById('password');
         function signup() {
-
             if (email.value && password.value) {
-                fetchSignup(password, email);
+                fetchSignup(email.value, password.value);
             } else {
                 alert("Please fill out all fields.");
             }
@@ -85,39 +87,34 @@
 
         async function fetchSignup(email, password) {
             const apiUrl = "https://cs-canvas.stu.nighthawkcodingsociety.com/api/user/createPerson";
-            
+
             const personData = {
                 email: email,
                 password: password,
-              };
+            };
 
             fetch(apiUrl, {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json", // Specify the content type
-                    },
-                    body: JSON.stringify(personData), // Convert data to JSON format
-                  })
-                    .then((response) => {
-                      if (!response.ok) {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json", // Specify the content type
+                    // "Access-Control-Allow-Origin": "*"
+                },
+                body: JSON.stringify(personData), // Convert data to JSON format
+            })
+                .then((response) => {
+                    if (!response.ok) {
                         throw new Error("Network response was not ok");
-                      }
-                      return response.json(); // Parse the response as JSON
-                    })
-                    .then((data) => {
-                      // Handle the response data here
-                      console.log("Person created successfully:", data);
-                      window.location.href = "{{ site.baseurl }}/login";
-                      alert("Account created. Log in below!");
-                    })
-                    .catch((error) => {
-                      // Handle errors here
-                      console.error("Error creating person:", error);
-                    });
-                  
-
+                    }
+                })
+                .then((data) => {
+                    // Handle the response data here
+                    console.log("Person created successfully:", data);
+                    window.location.href = "/cscanvasfrontend/";
+                    alert("Account created. Log in below!");
+                })
         }
     </script>
 
 </body>
+
 </html>

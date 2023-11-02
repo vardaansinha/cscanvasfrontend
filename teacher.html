@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Checker & Turn-In Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .button-blue {
+            background-color: blue;
+            color: white;
+        }
+
+        .button-green {
+            background-color: green;
+            color: white;
+        }
+
+        .input-field {
+            margin-bottom: 20px;
+        }
+
+        .input-field label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-field input[type="text"],
+        .input-field select,
+        .input-field input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border: 1px solid #aaa;
+        }
+
+        table, th, td {
+            border: 1px solid #aaa;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f5f5f5;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        #assignmentForm {
+            margin-top: 20px;
+        }
+
+        .edit-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #007BFF;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="button button-blue" onclick="uiManager.showForm()">+ New Assignment</button>
+    <div id="assignmentForm" style="display: none;">
+        <div class="input-field">
+            <label for="title">Title of Assignment:</label>
+            <input type="text" id="title" name="title">
+        </div>
+
+        <div class "input-field">
+            <label for="description">Description of Assignment:</label>
+            <input type="text" id="description" name="description">
+        </div>
+
+        <div class="input-field">
+            <label for="category">Assignment Category:</label>
+            <select id="category" name="category">
+                <option value="homework">Homework</option>
+                <option value="project">Project</option>
+                <option value="exam">Exam</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <label for="week">Assignment Week:</label>
+            <select id="week" name="week">
+                <!-- ... (same as before) -->
+            </select>
+        </div>
+
+        <div class="input-field">
+            <label for="points">Points:</label>
+            <input type="number" id="points" name="points">
+        </div>
+
+        <button class="button button-green" onclick="uiManager.saveAssignment()">Save</button>
+    </div>
+
+    <h2>Your Published Assignments</h2>
+    <div id="savedAssignments"></div>
+
+    <script>
+        class Assignment {
+            constructor(title, description, category, week, points) {
+                this.title = title;
+                this.description = description;
+                this.category = category;
+                this.week = week;
+                this.points = points;
+            }
+        }
+
+        class AssignmentManager {
+            constructor() {
+                this.assignments = this.getAssignmentsFromStorage();
+            }
+
+            getAssignmentsFromStorage() {
+                let assignments = localStorage.getItem('assignments');
+                return assignments ? JSON.parse(assignments) : [];
+            }
+
+            saveAssignmentToStorage() {
+                localStorage.setItem('assignments', JSON.stringify(this.assignments));
+            }
+
+            addAssignment(assignment) {
+                this.assignments.push(assignment);
+                this.saveAssignmentToStorage();
+            }
+
+            updateAssignment(index, updatedAssignment) {
+                this.assignments[index] = updatedAssignment;
+                this.saveAssignmentToStorage();
+            }
+        }
+
+        class UIManager {
+            constructor(assignmentManager) {
+                this.assignmentManager = assignmentManager;
+                this.currentEditIndex = null;
+            }
+
+            showForm() {
+                document.getElementById('assignmentForm').style.display = 'block';
+            }
+
+            hideForm() {
+                document.getElementById('assignmentForm').style.display = 'none';
+            }
+
+            getFormData() {
+                return new Assignment(
+                    document.getElementById('title').value,
+                    document.getElementById('description').value,
+                    document.getElementById('category').value,
+                    document.getElementById('week').value,
+                    document.getElementById('points').value
+                );
+            }
+
+            saveAssignment() {
+                const assignment = this.getFormData();
+                if (this.currentEditIndex !== null) {
+                    this.assignmentManager.updateAssignment(this.currentEditIndex, assignment);
+                    this.currentEditIndex = null;
+                } else {
+                    this.assignmentManager.addAssignment(assignment);
+                }
+                this.displayAssignments();
+                this.hideForm();
+                alert('Assignment saved!');
+            }
+
+            editAssignment(index) {
+                const assignment = this.assignmentManager.assignments[index];
+                document.getElementById('title').value = assignment.title;
+                document.getElementById('description').value = assignment.description;
+                document.getElementById('category').value = assignment.category;
+                document.getElementById('week').value = assignment.week;
+                document.getElementById('points').value = assignment.points;
+                this.currentEditIndex = index;
+                this.showForm();
+            }
+
+            displayAssignments() {
+                let tableHtml = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th Description</th>
+                            <th>Category</th>
+                            <th>Week</th>
+                            <th>Points</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+
+                this.assignmentManager.assignments.forEach((assignment, index) => {
+                    tableHtml += `
+                        <tr>
+                            <td>${assignment.title}</td>
+                            <td>${assignment.description}</td>
+                            <td>${assignment.week}</td>
+                            <td>${assignment.points}</td>
+                            <td><button class="edit-btn" onclick="uiManager.editAssignment(${index})">✏️</button></td>
+                        </tr>
+                    `;
+                });
+
+                tableHtml += '</tbody></table>';
+                document.getElementById('savedAssignments').innerHTML = tableHtml;
+            }
+        }
+
+        const assignmentManager = new AssignmentManager();
+        const uiManager = new UIManager(assignmentManager);
+
+        window.onload = function() {
+            uiManager.displayAssignments();
+        };
+
+        async function fetchIsAuth() {
+            const apiUrl = "https://cs-canvas.stu.nighthawkcodingsociety.com/api/user/isAuthenticated";
+
+            fetch(apiUrl, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "jwt", // Specify the content type
+                },
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json(); // Parse the response as JSON
+                })
+                .then((data) => {
+                })
+                .catch((error) => {
+                    // Handle errors here
+                    alert("You are not authenticated! Log In!");
+                    console.error("Not authenticated");
+                    window.location.href = "/cscanvasfrontend/";
+                });
+        }
+        fetchIsAuth();
+    </script>
+</body>
+</html>
