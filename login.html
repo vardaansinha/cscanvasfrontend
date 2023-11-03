@@ -149,7 +149,7 @@
                     })
                     .then((data) => {
                       alert("Logged out!");
-                      window.location.href = "/cscanvasfrontend/student";
+                      window.location.href = "/cscanvasfrontend/";
                     })
                     .catch((error) => {
                       // Handle errors here
@@ -157,7 +157,7 @@
                       if (error == "TypeError: Failed to fetch") {
                         console.log("Ignore this error")
                         alert("Logged out!");
-                        window.location.href = "/cscanvasfrontend/student";
+                        window.location.href = "/cscanvasfrontend/";
                       }
                       console.error("Error logging in:", error);
                     });
